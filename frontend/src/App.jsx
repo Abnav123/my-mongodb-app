@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+const API_BASE_URL = import.meta.env.VITE_API_URL || "https://my-mongodb-app-wv5h.onrender.com";
 
 function pickColor(index) {
   const colors = ["#ff006e", "#ff9f1c", "#00c2ff", "#2ceaa3", "#fb5607", "#3a86ff"];
