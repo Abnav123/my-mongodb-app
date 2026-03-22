@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
 function pickColor(index) {
   const colors = ["#ff006e", "#ff9f1c", "#00c2ff", "#2ceaa3", "#fb5607", "#3a86ff"];
   return colors[index % colors.length];
@@ -27,7 +29,7 @@ export default function App() {
     setLoading(true);
     setError("");
     try {
-      const res = await axios.get("/api/cars");
+      const res = await axios.get(`${API_BASE_URL}/api/cars`);
       setCars(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       setError(err?.response?.data?.error || err.message || "Failed to fetch cars");
@@ -62,7 +64,7 @@ export default function App() {
     }
 
     try {
-      await axios.post("/api/cars", payload);
+      await axios.post(`${API_BASE_URL}/api/cars`, payload);
       setForm({
         member_id: "",
         owner_name: "",
@@ -86,7 +88,7 @@ export default function App() {
     setBusy(true);
     setError("");
     try {
-      await axios.delete(`/api/cars/${id}`);
+      await axios.delete(`${API_BASE_URL}/api/cars/${id}`);
       setCars((prev) => prev.filter((car) => car._id !== id));
     } catch (err) {
       setError(err?.response?.data?.error || err.message || "Failed to remove car");
