@@ -4,7 +4,7 @@ import axios from "axios";
 const API_BASE_URL = import.meta.env.VITE_API_URL || "https://my-mongodb-app-wv5h.onrender.com";
 
 function pickColor(index) {
-  const colors = ["#ff006e", "#ff9f1c", "#00c2ff", "#2ceaa3", "#fb5607", "#3a86ff"];
+  const colors = ["#f5f5f5", "#d4d4d4", "#a3a3a3", "#737373", "#e5e5e5", "#bdbdbd"];
   return colors[index % colors.length];
 }
 
@@ -37,7 +37,7 @@ export default function App() {
   const [sortBy, setSortBy] = useState("newest");
   const [yearMin, setYearMin] = useState("");
   const [yearMax, setYearMax] = useState("");
-  const [palette, setPalette] = useState(() => localStorage.getItem("carsd-palette") || "sunrise");
+  const [palette, setPalette] = useState(() => localStorage.getItem("carsd-palette") || "black");
 
   const [form, setForm] = useState({
     member_id: "",
@@ -215,14 +215,8 @@ export default function App() {
         <p className="subtitle">One visual command center for inventory, owners, and instant fleet insights.</p>
 
         <div className="palette-row" role="radiogroup" aria-label="Choose color theme">
-          <button className={`swatch swatch-sunrise ${palette === "sunrise" ? "active" : ""}`} onClick={() => setPalette("sunrise")}>
-            Sunrise
-          </button>
-          <button className={`swatch swatch-lagoon ${palette === "lagoon" ? "active" : ""}`} onClick={() => setPalette("lagoon")}>
-            Lagoon
-          </button>
-          <button className={`swatch swatch-club ${palette === "club" ? "active" : ""}`} onClick={() => setPalette("club")}>
-            Club
+          <button className={`swatch swatch-black ${palette === "black" ? "active" : ""}`} onClick={() => setPalette("black")}>
+            Black Theme
           </button>
         </div>
 
