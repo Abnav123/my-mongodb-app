@@ -86,13 +86,13 @@ Create a `.env` file in the root:
 MONGODB_URL=mongodb+srv://username:password@cluster.mongodb.net/?retryWrites=true&w=majority
 DB_NAME=your_database_name
 PORT=3000
-VITE_API_URL=http://localhost:3000
+VITE_API_URL=https://my-mongodb-app-wv5h.onrender.com
 ```
 
 **3. Start Backend Server**
 ```bash
 npm start
-# Server runs on http://localhost:3000
+# Server runs on your configured PORT (for production, use Render URL)
 ```
 
 **4. Setup Frontend (in another terminal)**
@@ -100,18 +100,18 @@ npm start
 cd frontend
 npm install
 npm run dev
-# Frontend runs on http://localhost:5173
+# Frontend runs on your Vite dev URL (for production, use Render URL)
 ```
 
 **5. Open in Browser**
-Navigate to `http://localhost:5173`
+Navigate to your frontend live demo: `https://my-mongodb-app-frontend.onrender.com/`
 
 ### API Endpoints
 
 #### GET /api/cars
 Fetch all vehicles (max 200 results)
 ```bash
-curl http://localhost:3000/api/cars
+curl https://my-mongodb-app-wv5h.onrender.com/api/cars
 ```
 **Response:**
 ```json
@@ -133,7 +133,7 @@ curl http://localhost:3000/api/cars
 #### POST /api/cars
 Add a new vehicle
 ```bash
-curl -X POST http://localhost:3000/api/cars \
+curl -X POST https://my-mongodb-app-wv5h.onrender.com/api/cars \
   -H "Content-Type: application/json" \
   -d '{
     "owner_name": "Jane Doe",
@@ -149,7 +149,7 @@ curl -X POST http://localhost:3000/api/cars \
 #### DELETE /api/cars/:id
 Remove a vehicle by ID
 ```bash
-curl -X DELETE http://localhost:3000/api/cars/65f8d4a2c1b8e9f2a3d4e5f6
+curl -X DELETE https://my-mongodb-app-wv5h.onrender.com/api/cars/65f8d4a2c1b8e9f2a3d4e5f6
 ```
 **Response:** `200 OK` with success confirmation
 
@@ -222,31 +222,24 @@ Click **"Fill Sample"** to auto-populate the form with a random demo vehicle.
 
 ## Testing
 
-Currently no automated tests. Recommended additions for production:
+Backend API tests are implemented using Node's built-in test runner and Supertest.
 
-**Frontend:** Jest + React Testing Library
+Covered cases:
+- `GET /api/cars` returns `200` and an array
+- `POST /api/cars` with valid payload returns `201`
+- `POST /api/cars` with missing required fields returns `400`
+- `POST /api/cars` with invalid status returns `400`
+- `DELETE /api/cars/:id` with invalid id returns `400`
+
+Run tests from project root:
 ```bash
-npm install --save-dev jest @testing-library/react
+cd e:/kacnlksan/my-mongodb-app
+npm test
 ```
 
-**Backend:** Mocha + Chai
+Run only the API test file:
 ```bash
-npm install --save-dev mocha chai supertest
-```
-
-Example test:
-```javascript
-describe('POST /api/cars', () => {
-  it('should create a new car', (done) => {
-    chai.request(app)
-      .post('/api/cars')
-      .send({ owner_name: 'Test', make: 'Toyota', model: 'Camry', year: 2024, color: 'Red', status: 'ACTIVE' })
-      .end((err, res) => {
-        res.should.have.status(201);
-        done();
-      });
-  });
-});
+node --test test/api.test.js
 ```
 
 ---
@@ -291,7 +284,7 @@ describe('POST /api/cars', () => {
 | `MONGODB_URL` | ✅ | MongoDB connection string |
 | `DB_NAME` | ✅ | Database name in MongoDB |
 | `PORT` | ❌ | Server port (default: 3000) |
-| `VITE_API_URL` | ❌ | Frontend API base URL (default: http://localhost:3000) |
+| `VITE_API_URL` | ❌ | Frontend API base URL (example: https://my-mongodb-app-wv5h.onrender.com) |
 | `TRIGGER_WEBHOOK_SECRET` | ❌ | Optional webhook secret for audit logs |
 
 ---
@@ -330,7 +323,7 @@ This project is open source under the MIT License. See LICENSE file for details.
 
 ## Author
 
-Built by [Your Name] – [Your GitHub Profile](https://github.com/yourusername)
+Built by Abhinav Peddapalli
 
 Feedback & improvements welcome! Open an issue or reach out directly.
 
